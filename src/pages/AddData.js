@@ -25,7 +25,7 @@ const handleSubmit = (event) => {
   });
 };
 
-const Home = () => {
+const AddData = () => {
   const [data, setData] = useState([]);
   const getData = async () => {
     await axios
@@ -128,4 +128,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AddData;
