@@ -8,9 +8,7 @@ const BankDetails = () => {
   const [data, setData] = useState({});
   const { id } = useParams();
   const loadData = async () => {
-    const res = await axios.get(
-      `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
+    const res = await axios.get(`http://143.244.128.171:9091/v1/bank/${id}`);
     setData(res.data);
   };
   useEffect(() => {
@@ -23,9 +21,10 @@ const BankDetails = () => {
       justifyContent="center"
       alignItems="center"
       sx={{ marginTop: "50px" }}
+      direction="column"
     >
-      <Card>{data.title}</Card>
-      <Card>{data.id}</Card>
+      <Card>{data.bank_name}</Card>
+      <Card>{data.bank_id}</Card>
     </Grid>
   );
 };

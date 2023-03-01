@@ -17,7 +17,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const getData = async () => {
     await axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get("http://143.244.128.171:9091/v1/bank")
       .then((response) => {
         setData(response.data);
       })
@@ -26,7 +26,14 @@ const Home = () => {
       });
   };
   const deleteDate = async (id) => {
-    await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    await axios
+      .delete(`http://143.244.128.171:9091/v1/bank/${id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     getData();
   };
   useEffect(() => {
@@ -60,9 +67,9 @@ const Home = () => {
                     key={row.userId}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="center">{row.id}</TableCell>
-                    <TableCell align="center">{row.title}</TableCell>
-                    <TableCell align="center">{row.id}</TableCell>
+                    <TableCell align="center">{row.bank_id}</TableCell>
+                    <TableCell align="center">{row.bank_name}</TableCell>
+                    <TableCell align="center">{row.bank_name_ar}</TableCell>
                     <TableCell align="center">
                       <Button>
                         <DeleteIcon
@@ -71,7 +78,7 @@ const Home = () => {
                             marginRight: "10px",
                             fontSize: "20px",
                           }}
-                          onClick={() => deleteDate(row.id)}
+                          onClick={() => deleteDate(row.bank_id)}
                         />
                       </Button>
                       <Button>
@@ -83,7 +90,7 @@ const Home = () => {
                         />
                       </Button>
 
-                      <Link to={`/bank/${row.id}`}>
+                      <Link to={`/bank/${row.bank_id}`}>
                         {" "}
                         <Button variant="contained">View Details</Button>
                       </Link>
