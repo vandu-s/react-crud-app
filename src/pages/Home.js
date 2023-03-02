@@ -19,7 +19,7 @@ const Home = () => {
     await axios
       .get("http://143.244.128.171:9091/v1/bank")
       .then((response) => {
-        setData(response.data);
+        setData(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -81,17 +81,18 @@ const Home = () => {
                           onClick={() => deleteDate(row.bank_id)}
                         />
                       </Button>
-                      <Button>
-                        <EditIcon
-                          sx={{
-                            color: "green",
-                            fontSize: "20px",
-                          }}
-                        />
-                      </Button>
+                      <Link to={`/update-bank/${row.bank_id}`}>
+                        <Button>
+                          <EditIcon
+                            sx={{
+                              color: "green",
+                              fontSize: "20px",
+                            }}
+                          />
+                        </Button>
+                      </Link>
 
                       <Link to={`/bank/${row.bank_id}`}>
-                        {" "}
                         <Button variant="contained">View Details</Button>
                       </Link>
                     </TableCell>

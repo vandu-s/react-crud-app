@@ -4,54 +4,44 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  console.log({
-    email: data.get("email"),
-    password: data.get("password"),
-  });
-};
-
 const AddData = () => {
-  const [data, setData] = useState([]);
-  const getData = async () => {
-    await axios
-      .get("http://143.244.128.171:9091/v1/bank")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const navigate = useNavigate();
+
+  const initialState = {
+    bank_id: "",
+    bank_name: "",
+    bank_name_ar: "",
   };
-  const deleteDate = async (id) => {
+
+  const [data, setData] = useState(initialState);
+
+  const onChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const { bank_id, bank_name, bank_name_ar } = data;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     await axios
-      .delete(`http://143.244.128.171:9091/v1/bank/${id}`)
+      .post(`http://143.244.128.171:9091/v1/bank/`, data)
       .then((response) => {
         console.log(response);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
       });
-    getData();
   };
-  useEffect(() => {
-    getData();
-  }, []);
-
+  console.log(data);
   return (
     <>
       <Grid
@@ -90,23 +80,29 @@ const AddData = () => {
                   fullWidth
                   label="Bank Id"
                   name="bank_id"
+                  value={bank_id}
                   autoComplete="email"
                   autoFocus
+                  onChange={(e) => onChange(e)}
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   name="bank_name"
+                  value={bank_name}
                   label="Bank Name"
+                  onChange={(e) => onChange(e)}
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   name="bank_name_ar"
+                  value={bank_name_ar}
                   label="Bank Name AR"
                   autoComplete="current-password"
+                  onChange={(e) => onChange(e)}
                 />
 
                 <Button
