@@ -41,7 +41,6 @@ const AddData = () => {
         console.log(err);
       });
   };
-  console.log(data);
   return (
     <>
       <Grid

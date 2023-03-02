@@ -30,6 +30,13 @@ const EditData = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const { bank_id, bank_name, bank_name_ar } = data;
+  const loadData = async () => {
+    const res = await axios.get(`http://143.244.128.171:9091/v1/bank/${id}`);
+    setData(res.data);
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,14 +50,6 @@ const EditData = () => {
         console.log(err);
       });
   };
-  const loadData = async () => {
-    const res = await axios.get(`http://143.244.128.171:9091/v1/bank/${id}`);
-    setData(res.data);
-  };
-  useEffect(() => {
-    loadData();
-  }, []);
-
   return (
     <>
       <Grid
@@ -93,6 +92,7 @@ const EditData = () => {
                   autoComplete="email"
                   autoFocus
                   onChange={(e) => onChange(e)}
+                  disabled={true}
                 />
                 <TextField
                   margin="normal"
